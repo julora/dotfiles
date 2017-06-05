@@ -20,9 +20,11 @@ let s:isOSX = has('mac')
 let s:mysettings = {}
 let s:mysettings.hasPython = has('python') || has('python3')
 let s:mysettings.hasCtags = 0
+let s:mysettings.hasPandoc= 0
 
 if s:isOSX
     let s:mysettings.hasCtags = 1
+    let s:mysettings.hasPandoc= 1
 endif
 
 " ******************************************************************************
@@ -161,37 +163,31 @@ else
 endif
 colorscheme solarized
 
-" status line configuration
+" status line configuration slightly similar to airline
 " show statusline always (2)
 set laststatus=2
 set statusline=
 " use 1 space between statusline groups
 let statusSpace= ' '
-" Path to the file in the buffer, as typed or relative to current
-" directory
-set statusline+=%f%{statusSpace}
-set statusline+=[%{&ff}]%{statusSpace}
 " status flags:
 " h = Help buffer flag, text is '[help]'.
 " m = Modified flag, text is '[+]'; '[-]' if 'modifiable' is off.
 " r = Readonly flag, text is '[RO]'.
 " w = Preview window flag, text is '[Preview]'.
 set statusline+=%h%m%r%w
+" Path to the file in the buffer, as typed or relative to current directory
+set statusline+=%f%{statusSpace}
 " Separation point between left and right aligned items.
 " No width fields allowed.
 set statusline+=%=
-" fieletype
+" show file encoding
+set statusline+=%{&enc}
+" show file format
+set statusline+=[%{&ff}]%{statusSpace}
+" filetype
 " y = Type of file in the buffer, e.g., '[vim]'.  See 'filetype'.
-" text position:
-" l = Line number.
-" L = Number of lines in buffer.
 set statusline+=%y%{statusSpace}
-set statusline+=%l/%L%{statusSpace}
-" < = Where to truncate line if too long.  Default is at the start.
-" No width fields allowed.
-" P = Percentage through file of displayed window.
-set statusline+=%<%P
-set statusline+=%{statusSpace}
+" show current time
 set statusline+=%{strftime(\'%H:%M\')}
 
 " Use visual bell instead of beeping.
@@ -219,31 +215,54 @@ endif
 
 " VIM-AIRLINE PLUGIN
 " ------------------
+" enable airline plugin
 let g:airline#extensions#tabline#enabled = 1
-let g:airline_section_z='%-15(%l/%L:%P:%c%V%)'
+" overwrite default airline configuration in function airline#init#sections() file init.vim
+" https://github.com/vim-airline/vim-airline/blob/master/autoload/airline/init.vim
+" show current time instead of text position
+let g:airline_section_z = airline#section#create(["%{strftime(\'%H:%M\')}"])
 
 " VIM-SURROUND PLUGIN
 " -------------------
-" Create Custom Surround for robotframework variables
+" custom robot framework surroundings
+" change surrounding for $ (ascii code 36) to ${}
 autocmd FileType robot let b:surround_36 = "${\r}"
 
 " NERDCOMMENTER PLUGIN
 " --------------------
-" custom commenting for robot filetype
+" override the default delimiters for robot files.
 let g:NERDCustomDelimiters = {
         \ 'robot': { 'left': '#'}
     \ }
+" comment out whole lines if there is no multipart delimiters 
+" but the EXACT text that was selected if there IS multipart delimiters
+" multipart delimiters e.g. in java /* this is a comment */
 let NERDCommentWholeLinesInVMode=2
+" comment whole lines at beginning of line regardless of current indentation
+" level
 let NERDDefaultAlign='start'
 let NERDRemoveExtraSpaces=0
 
 " CTRLP PLUGIN
 " ------------
-let g:ctrlp_extensions = ['tag', 'quickfix', 'dir', 'rtscript', 'undo', 'line', 'changes', 'mixed', 'bookmarkdir']
+"
+" tag = Search for a tag within a generated central tags file, and jump to the definition
+" buffertag = Search for a tag within the current buffer or all listed buffers and jump to the definition
+" quickfix = Search for an entry in the current quickfix errors and jump to it.
+" dir = Search for a directory and change the working directory to it.
+" rtscript = Search for files (vimscripts, docs, snippets...) in runtimepath.
+" undo = Browse undo history.
+" line = Search for a line in all listed buffers or in the specified [buffer].
+" changes = Search for and jump to a recent change in the current buffer or in all listed buffers.
+" mixed = Search in files, buffers and MRU files at the same time.
+" bookmarkdir = Search for a bookmarked directory and change the working directory to it.
+
+" enable extensions
+let g:ctrlp_extensions = ['tag', 'quickfix', 'dir']
 
 " EASYTAGS PLUGIN
 " ---------------
-" update project tags files
+" update project tags files instead of .vimtags
 let g:easytags_dynamic_files = 1
 
 
@@ -255,9 +274,12 @@ let g:easytags_dynamic_files = 1
 "autocmd FileType robot set iskeyword+=$,{,}
 
 " set standard makeprg
-" pandoc word output for markdown-files
-autocmd FileType mkd.markdown set makeprg=pandoc\ -f\ markdown\ -t\ docx\ -o\ %.docx\ %
-autocmd FileType markdown set makeprg=pandoc\ -f\ markdown\ -t\ docx\ -o\ %.docx\ %
+
+if s:mysettings.hasPandoc
+    " pandoc word output for markdown-files
+    autocmd FileType mkd.markdown set makeprg=pandoc\ -f\ markdown\ -t\ docx\ -o\ %.docx\ %
+    autocmd FileType markdown set makeprg=pandoc\ -f\ markdown\ -t\ docx\ -o\ %.docx\ %
+endif
 
 " start robot automation with os configuration
 if s:isOSX
@@ -272,7 +294,7 @@ endif
 " ******************************************************************************
 
 " use space as mapleader
-let mapleader = '\<Space>'
+let mapleader = "\<Space>"
 
 " custom mappings with mapleader
 " write file
@@ -287,6 +309,8 @@ nnoremap <Leader><Tab> :bn!<CR>
 nnoremap <Leader>p :CtrlP<CR>
 " show ctrlp-tag mode
 nnoremap <Leader>t :CtrlPTag<CR>
+" reload .vimrc
+nnoremap <Leader>r :source ~/.vimrc<CR>
 " insert filename
 nnoremap <Leader>fn "=expand("%:t")<CR>p
 
