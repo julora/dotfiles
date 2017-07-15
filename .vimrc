@@ -16,6 +16,9 @@ let s:isUnix = has('unix')
 " mac
 let s:isOSX = has('mac')
 
+" check if terminal
+let s:isTerminal = !has('gui_running')
+
 " check binaries an other stuff
 let s:mysettings = {}
 let s:mysettings.hasPython = has('python') || has('python3')
@@ -89,8 +92,13 @@ if s:mysettings.hasCtags
     Plugin 'xolox/vim-easytags'
 endif
 " plugin visually show indent and indent text object
+" docs: https://github.com/nathanaelkane/vim-indent-guides
+" docs: https://github.com/michaeljsmith/vim-indent-object
 Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'michaeljsmith/vim-indent-object'
+" plugin new startscreen show last used files, etc.
+" docs https://github.com/mhinz/vim-startify
+Plugin 'mhinz/vim-startify'
 call vundle#end()
 " use filetype plugins
 filetype plugin indent on
@@ -156,11 +164,20 @@ set tags=tags;
 syntax enable
 
 " color scheme solarized
-if s:isWin
+if s:isWin || s:isTerminal
     set background=dark
 else
     set background=light
 endif
+
+" color fix for terminal
+" use this fix before(!) choosing colorsheme
+if s:isTerminal
+    let g:solarized_termcolors=256
+    set t_Co=256
+    set t_ut=
+endif
+
 colorscheme solarized
 
 " status line configuration slightly similar to airline
