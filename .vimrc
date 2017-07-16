@@ -99,6 +99,11 @@ Plugin 'michaeljsmith/vim-indent-object'
 " plugin new startscreen show last used files, etc.
 " docs https://github.com/mhinz/vim-startify
 Plugin 'mhinz/vim-startify'
+" plugin run shell command in tmux pane
+" docs https://github.com/benmills/vimux
+if s:isOSX
+    Plugin 'benmills/vimux'
+endif
 call vundle#end()
 " use filetype plugins
 filetype plugin indent on
@@ -330,6 +335,14 @@ nnoremap <Leader>t :CtrlPTag<CR>
 nnoremap <Leader>r :source ~/.vimrc<CR>
 " insert filename
 nnoremap <Leader>fn "=expand("%:t")<CR>p
+" Vimux Prompt Command
+nnoremap <Leader>vc :VimuxPromptCommand<CR>
+" Vimux Run Last Command
+nnoremap <Leader>l :VimuxRunLastCommand<CR>
+" Vimux Close Runner split
+nnoremap <Leader>vd :VimuxCloseRunner<CR>
+" Vimux Zoom Runner
+nnoremap <Leader>vz :VimuxZoomRunner<CR>
 
 " jump to tag by pressing 't'
 nnoremap t <C-]>
