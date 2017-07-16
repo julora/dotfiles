@@ -24,10 +24,16 @@ let s:mysettings = {}
 let s:mysettings.hasPython = has('python') || has('python3')
 let s:mysettings.hasCtags = 0
 let s:mysettings.hasPandoc= 0
+let s:mysettings.hasTmux= 0
 
 if s:isOSX
     let s:mysettings.hasCtags = 1
     let s:mysettings.hasPandoc= 1
+    let s:mysettings.hasTmux= 1
+endif
+
+if s:isUnix
+    let s:mysettings.hasTmux= 1
 endif
 
 " ******************************************************************************
@@ -101,7 +107,7 @@ Plugin 'michaeljsmith/vim-indent-object'
 Plugin 'mhinz/vim-startify'
 " plugin run shell command in tmux pane
 " docs https://github.com/benmills/vimux
-if s:isOSX
+if s:mysettings.hasTmux
     Plugin 'benmills/vimux'
 endif
 call vundle#end()
@@ -335,14 +341,17 @@ nnoremap <Leader>t :CtrlPTag<CR>
 nnoremap <Leader>r :source ~/.vimrc<CR>
 " insert filename
 nnoremap <Leader>fn "=expand("%:t")<CR>p
-" Vimux Prompt Command
-nnoremap <Leader>vc :VimuxPromptCommand<CR>
-" Vimux Run Last Command
-nnoremap <Leader>l :VimuxRunLastCommand<CR>
-" Vimux Close Runner split
-nnoremap <Leader>vd :VimuxCloseRunner<CR>
-" Vimux Zoom Runner
-nnoremap <Leader>vz :VimuxZoomRunner<CR>
+
+if s:mysettings.hasTmux
+    " Vimux Prompt Command
+    nnoremap <Leader>vc :VimuxPromptCommand<CR>
+    " Vimux Run Last Command
+    nnoremap <Leader>l :VimuxRunLastCommand<CR>
+    " Vimux Close Runner split
+    nnoremap <Leader>vd :VimuxCloseRunner<CR>
+    " Vimux Zoom Runner
+    nnoremap <Leader>vz :VimuxZoomRunner<CR>
+endif
 
 " jump to tag by pressing 't'
 nnoremap t <C-]>
