@@ -341,6 +341,9 @@ nnoremap <Leader>t :CtrlPTag<CR>
 nnoremap <Leader>r :source ~/.vimrc<CR>
 " insert filename
 nnoremap <Leader>fn "=expand("%:t")<CR>p
+" Toggle NerdTree
+nnoremap <Leader>n :NERDTreeToggle<CR>
+
 
 if s:mysettings.hasTmux
     " Vimux Prompt Command
@@ -366,5 +369,3 @@ function! Note()
     cd ~/Documents/hugo/personal-notes/content/
     Explore
 endfunction
-" custom function mapping
-nnoremap <Leader>n :call Note()<CR>
