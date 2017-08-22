@@ -341,8 +341,8 @@ nnoremap <Leader>t :CtrlPTag<CR>
 nnoremap <Leader>r :source ~/.vimrc<CR>
 " insert filename
 nnoremap <Leader>fn "=expand("%:t")<CR>p
-" Toggle NerdTree
-nnoremap <Leader>n :NERDTreeToggle<CR>
+" Toggle NerdTree in Current Folder
+nnoremap <Leader>n :NERDTreeToggle %<CR>
 
 
 if s:mysettings.hasTmux
