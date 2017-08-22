@@ -343,7 +343,8 @@ nnoremap <Leader>r :source ~/.vimrc<CR>
 nnoremap <Leader>fn "=expand("%:t")<CR>p
 " Toggle NerdTree in Current Folder
 nnoremap <Leader>n :NERDTreeToggle %<CR>
-
+" change current dir to active File
+nnoremap <Leader>cd :cd %:p:h<CR>
 
 if s:mysettings.hasTmux
     " Vimux Prompt Command
