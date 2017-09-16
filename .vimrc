@@ -52,6 +52,9 @@ call vundle#begin(path)
 " let Vundle manage Vundle, required
 " docs: http://github.com/VundleVim/Vundle.Vim
 Plugin 'gmarik/Vundle.vim'
+" plugin better default settings for vim
+" docs: https://github.com/tpope/vim-sensible
+Plugin 'tpope/vim-sensible'
 " plugin using git in vim
 " docs: https://github.com/tpope/vim-fugitive
 Plugin 'tpope/vim-fugitive'
@@ -262,7 +265,7 @@ autocmd FileType robot let b:surround_36 = "${\r}"
 let g:NERDCustomDelimiters = {
         \ 'robot': { 'left': '#'}
     \ }
-" comment out whole lines if there is no multipart delimiters 
+" comment out whole lines if there is no multipart delimiters
 " but the EXACT text that was selected if there IS multipart delimiters
 " multipart delimiters e.g. in java /* this is a comment */
 let NERDCommentWholeLinesInVMode=2
@@ -313,7 +316,7 @@ endif
 if s:isOSX
     autocmd FileType robot set makeprg=pybot\ -V\ ~/RobotChromeDriverOptions/variables.yaml\ %
 endif
-if s:isWin 
+if s:isWin
     autocmd FileType robot set makeprg=python\ -m\ robot.run\ %
 endif
 
