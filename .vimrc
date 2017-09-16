@@ -36,6 +36,20 @@ if s:isUnix
     let s:mysettings.hasTmux= 1
 endif
 
+" Global file paths
+" '/' at end will save these files with absolute path to ensure unique
+" filesnames
+if s:isWin
+    set undodir=~/vimfiles/undo//
+    set backupdir=~/vimfiles/backup//
+    set directory=~/vimfiles/swp//
+endif
+if s:isUnix || s:isOSX
+    set undodir=~/.vim/.undo//
+    set backupdir=~/.vim/.backup//
+    set directory=~/.vim/.swp//
+endif
+
 " ******************************************************************************
 " (2) PLUGINS (Plugin Manager Vundle)
 " ******************************************************************************
@@ -159,10 +173,12 @@ set wildmenu
 " If in Insert, Replace or Visual mode put a message on the last line.
 set showmode
 
-" backup and swapfiles
-" no backup or swapfiles at all
+" backup ,swap an undofiles
+" no backup or swapfiles
 set nobackup
 set noswapfile
+" but persistent undofiles
+set undofile
 
 " When off a buffer is unloaded when it is abandoned.  When on a
 " buffer becomes hidden when it is w abandoned.
