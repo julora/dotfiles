@@ -111,7 +111,9 @@ Plugin 'mhinz/vim-startify'
 " plugin run shell command in tmux pane
 " docs https://github.com/benmills/vimux
 if s:mysettings.hasTmux
-    Plugin 'benmills/vimux'
+    " plugin switching between tmux and vim splits
+    " docs: https://github.com/christoomey/vim-tmux-navigator
+    Plugin 'christoomey/vim-tmux-navigator'
 endif
 call vundle#end()
 " use filetype plugins
@@ -348,17 +350,6 @@ nnoremap <Leader>fn "=expand("%:t")<CR>p
 nnoremap <Leader>n :NERDTreeToggle %<CR>
 " change current dir to active File
 nnoremap <Leader>cd :cd %:p:h<CR>
-
-if s:mysettings.hasTmux
-    " Vimux Prompt Command
-    nnoremap <Leader>vc :VimuxPromptCommand<CR>
-    " Vimux Run Last Command
-    nnoremap <Leader>l :VimuxRunLastCommand<CR>
-    " Vimux Close Runner split
-    nnoremap <Leader>vd :VimuxCloseRunner<CR>
-    " Vimux Zoom Runner
-    nnoremap <Leader>vz :VimuxZoomRunner<CR>
-endif
 
 " jump to tag by pressing 't'
 nnoremap t <C-]>
