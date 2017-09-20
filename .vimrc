@@ -180,6 +180,9 @@ set noswapfile
 " but persistent undofiles
 set undofile
 
+" use system clipboard for default yank
+set clipboard=unnamed
+
 " When off a buffer is unloaded when it is abandoned.  When on a
 " buffer becomes hidden when it is w abandoned.
 " change between buffers without saving
