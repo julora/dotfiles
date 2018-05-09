@@ -142,6 +142,8 @@ filetype plugin indent on
 " (3) EDITOR CONFIGURATION
 " ******************************************************************************
 
+" set space between lines
+set linespace=3
 " smart autoindenting when starting a new line
 set smartindent
 " number of spaces to use for each step of (auto)indent
