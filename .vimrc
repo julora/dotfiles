@@ -106,8 +106,8 @@ endif
 " docs: https://github.com/wellle/targets.vim
 Plugin 'wellle/targets.vim'
 " plugin fuzzy finder
-" docs: https://github.com/kien/ctrlp.vim
-Plugin 'kien/ctrlp.vim'
+" docs: https://github.com/ctrlpvim/ctrlp.vim
+Plugin 'ctrlpvim/ctrlp.vim'
 " plugin for easy tag management
 " docs: https://github.com/xolox/vim-easytags
 if s:mysettings.hasCtags
@@ -128,6 +128,11 @@ if s:mysettings.hasTmux
     " plugin switching between tmux and vim splits
     " docs: https://github.com/christoomey/vim-tmux-navigator
     Plugin 'christoomey/vim-tmux-navigator'
+endif
+if s:isOSX
+"plugin nice looking icons
+" docs: https://github.com/ryanoasis/vim-devicons
+Plugin 'ryanoasis/vim-devicons'
 endif
 call vundle#end()
 " use filetype plugins
@@ -154,7 +159,7 @@ set number
 set relativenumber
 
 " use standard utf-8 encoding
-set encoding=utf-8
+set encoding=UTF-8
 " use standard unix file formatting even for windows
 set fileformat=unix
 
@@ -251,7 +256,8 @@ if has("gui_running")
     set guioptions-=m
     if s:isOSX
         " guifont and size
-        set guifont=Monaco:h20
+        set guifont=Hack\ Regular\ Nerd\ Font\ Complete:h22
+
     endif
     if s:isWin
         " 'T' Include Toolbar.
