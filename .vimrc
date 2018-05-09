@@ -354,6 +354,9 @@ endif
 " use space as mapleader
 let mapleader = "\<Space>"
 
+" map "jj" to <ESC> in Insert-Mode  
+inoremap jj <ESC>
+
 " custom mappings with mapleader
 " write file
 nnoremap <Leader>w :w<CR>
