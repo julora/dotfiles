@@ -72,6 +72,9 @@ Plugin 'tpope/vim-sensible'
 " plugin using git in vim
 " docs: https://github.com/tpope/vim-fugitive
 Plugin 'tpope/vim-fugitive'
+" plugin exec, make build in background
+" docs: https://github.com/tpope/vim-dispatch 
+Plugin 'tpope/vim-dispatch'
 " plugin easy comment and uncomment
 " docs: https://github.com/scrooloose/nerdcommenter
 Plugin 'scrooloose/nerdcommenter'
