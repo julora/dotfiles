@@ -328,6 +328,11 @@ let g:ctrlp_extensions = ['tag', 'quickfix', 'dir']
 " update project tags files instead of .vimtags
 let g:easytags_dynamic_files = 1
 
+" DEVICONS PLUGIN
+let g:WebDevIconsOS = 'Darwin'
+
+let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols = {}
+let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['robot'] = 'ﮧ'
 
 " ******************************************************************************
 " (6) FILETYPE SPECIFIC CONFIGURATIONS
