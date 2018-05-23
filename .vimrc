@@ -378,6 +378,8 @@ nnoremap <Leader>b :bd<CR>
 nnoremap <Leader><Tab> :bn!<CR>
 " show ctrlp-file mode
 nnoremap <Leader>p :CtrlP<CR>
+" show ctrlp-buffer mode
+nnoremap <Leader>o :CtrlPBuffer<CR>
 " show ctrlp-tag mode
 nnoremap <Leader>t :CtrlPTag<CR>
 " reload .vimrc
