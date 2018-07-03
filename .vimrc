@@ -23,13 +23,15 @@ let s:isTerminal = !has('gui_running')
 let s:mysettings = {}
 let s:mysettings.hasPython = has('python') || has('python3')
 let s:mysettings.hasCtags = 0
-let s:mysettings.hasPandoc= 0
-let s:mysettings.hasTmux= 0
+let s:mysettings.hasPandoc = 0
+let s:mysettings.hasTmux = 0
+let s:mysettings.hasDevelopment = 0
 
 if s:isOSX
     let s:mysettings.hasCtags = 1
     let s:mysettings.hasPandoc= 1
     let s:mysettings.hasTmux= 1
+    let s:mysettings.hasDevelopment = 1
 endif
 
 if s:isUnix
@@ -136,6 +138,11 @@ if s:isOSX
 "plugin nice looking icons
 " docs: https://github.com/ryanoasis/vim-devicons
 Plugin 'ryanoasis/vim-devicons'
+endif
+if s:mysettings.hasDevelopment
+    " plugin linter for python or other languages
+    " docs: https://github.com/vim-syntastic/syntastic
+    Plugin 'vim-syntastic/syntastic'
 endif
 call vundle#end()
 " use filetype plugins
@@ -328,11 +335,23 @@ let g:ctrlp_extensions = ['tag', 'quickfix', 'dir']
 " update project tags files instead of .vimtags
 let g:easytags_dynamic_files = 1
 
-" DEVICONS PLUGIN
-let g:WebDevIconsOS = 'Darwin'
+if s:isOSX
+    " DEVICONS PLUGIN
+    " ---------------
+    let g:WebDevIconsOS = 'Darwin'
 
-let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols = {}
-let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['robot'] = 'ﮧ'
+    let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols = {}
+    let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['robot'] = 'ﮧ'
+endif
+
+if s:mysettings.hasDevelopment
+    " SYNTASTIC PLUGIN
+    " ----------------
+    let g:syntastic_always_populate_loc_list = 1
+    let g:syntastic_auto_loc_list = 0
+    let g:syntastic_check_on_open = 0
+    let g:syntastic_check_on_wq = 0
+endif
 
 " ******************************************************************************
 " (6) FILETYPE SPECIFIC CONFIGURATIONS
