@@ -351,6 +351,8 @@ if s:mysettings.hasDevelopment
     let g:syntastic_auto_loc_list = 0
     let g:syntastic_check_on_open = 0
     let g:syntastic_check_on_wq = 0
+    " passive mode by default
+    let g:syntastic_mode_map = { 'mode': 'passive' }
 endif
 
 " ******************************************************************************
@@ -364,8 +366,12 @@ endif
 
 if s:mysettings.hasPandoc
     " pandoc word output for markdown-files
-    autocmd FileType mkd.markdown set makeprg=pandoc\ -f\ markdown\ -t\ docx\ -o\ %.docx\ %
-    autocmd FileType markdown set makeprg=pandoc\ -f\ markdown\ -t\ docx\ -o\ %.docx\ %
+"    autocmd FileType mkd.markdown set makeprg=pandoc\ -f\ markdown\ -t\ docx\ -o\ %.docx\ %
+"    autocmd FileType markdown set makeprg=pandoc\ -f\ markdown\ -t\ docx\ -o\ %.docx\ %
+
+    " pandoc reveal.js standalone output
+    autocmd FileType mkd.markdown set makeprg=pandoc\ -f\ markdown\ -t\ revealjs\ -s\ -V\ theme=solarized\ -o\ %.html\ %
+    autocmd FileType markdown set makeprg=pandoc\ -f\ markdown\ -t\ revealjs\ -s\ -V\ theme=solarized\ -o\ %.html\ %
 endif
 
 " start robot automation with os configuration
