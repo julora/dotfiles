@@ -366,12 +366,9 @@ endif
 
 if s:mysettings.hasPandoc
     " pandoc word output for markdown-files
-"    autocmd FileType mkd.markdown set makeprg=pandoc\ -f\ markdown\ -t\ docx\ -o\ %.docx\ %
-"    autocmd FileType markdown set makeprg=pandoc\ -f\ markdown\ -t\ docx\ -o\ %.docx\ %
-
-    " pandoc reveal.js standalone output
-    autocmd FileType mkd.markdown set makeprg=pandoc\ -f\ markdown\ -t\ revealjs\ -s\ -V\ theme=solarized\ -o\ %.html\ %
-    autocmd FileType markdown set makeprg=pandoc\ -f\ markdown\ -t\ revealjs\ -s\ -V\ theme=solarized\ -o\ %.html\ %
+    let s:pandocMakeDefault=1
+    autocmd FileType mkd.markdown set makeprg=pandoc\ -f\ markdown\ -t\ docx\ -o\ %.docx\ %
+    autocmd FileType markdown set makeprg=pandoc\ -f\ markdown\ -t\ docx\ -o\ %.docx\ %
 endif
 
 " start robot automation with os configuration
@@ -415,6 +412,10 @@ nnoremap <Leader>fn "=expand("%:t")<CR>p
 nnoremap <Leader>n :NERDTreeToggle %<CR>
 " change current dir to active File
 nnoremap <Leader>cd :cd %:p:h<CR>
+" yank current filename and line
+nnoremap <leader>y :let @+=expand("%") . ':' . line(".")<CR>
+" run SyntasticCheck
+nnoremap <leader>s :SyntasticCheck<CR>
 
 " jump to tag by pressing 't'
 nnoremap t <C-]>
@@ -425,7 +426,19 @@ nnoremap t <C-]>
 " use ! after function statement to overwrite existing functions
 " and supress warning at .vimrc reload
 
-function! Note()
-    cd ~/Documents/hugo/personal-notes/content/
-    Explore
-endfunction
+" toggle make program on markdown file types
+if s:mysettings.hasPandoc
+    function! PandocMakePrgToggle()
+        if s:pandocMakeDefault
+            echom "set pandoc makeprg docx"
+            set makeprg=pandoc\ -f\ markdown\ -t\ docx\ -o\ %.docx\ %
+            set makeprg=pandoc\ -f\ markdown\ -t\ docx\ -o\ %.docx\ %
+            let s:pandocMakeDefault = 0
+        else
+            echom "set pandoc makeprg reveal"
+            set makeprg=pandoc\ -f\ markdown\ -t\ revealjs\ -s\ -V\ theme=solarized\ -o\ %.html\ %
+            set makeprg=pandoc\ -f\ markdown\ -t\ revealjs\ -s\ -V\ theme=solarized\ -o\ %.html\ %
+            let s:pandocMakeDefault = 1
+        endif
+    endfunction
+endif
