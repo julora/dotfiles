@@ -144,6 +144,9 @@ if s:mysettings.hasDevelopment
     " plugin linter for python or other languages
     " docs: https://github.com/vim-syntastic/syntastic
     Plugin 'vim-syntastic/syntastic'
+    " plugin typescript highlighting
+    " docs: https://github.com/leafgarland/typescript-vim
+    Plugin 'leafgarland/typescript-vim'
 endif
 call vundle#end()
 " use filetype plugins
