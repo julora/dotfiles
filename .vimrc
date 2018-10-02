@@ -30,6 +30,7 @@ let s:mysettings.hasDevelopment = 0
 if s:isOSX
     let s:mysettings.hasCtags = 1
     let s:mysettings.hasPandoc= 1
+    let s:pandocMakeDefault=0
     let s:mysettings.hasTmux= 1
     let s:mysettings.hasDevelopment = 1
 endif
@@ -366,7 +367,6 @@ endif
 
 if s:mysettings.hasPandoc
     " pandoc word output for markdown-files
-    let s:pandocMakeDefault=1
     autocmd FileType mkd.markdown set makeprg=pandoc\ -f\ markdown\ -t\ docx\ -o\ %.docx\ %
     autocmd FileType markdown set makeprg=pandoc\ -f\ markdown\ -t\ docx\ -o\ %.docx\ %
 endif
