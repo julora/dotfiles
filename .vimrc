@@ -431,16 +431,15 @@ nnoremap t <C-]>
 
 " toggle make program on markdown file types
 if s:mysettings.hasPandoc
-    function! PandocMakePrgToggle()
+    function! PandocMakePrgToggle(...)
         if s:pandocMakeDefault
             echom "set pandoc makeprg docx"
             set makeprg=pandoc\ -f\ markdown\ -t\ docx\ -o\ %.docx\ %
-            set makeprg=pandoc\ -f\ markdown\ -t\ docx\ -o\ %.docx\ %
             let s:pandocMakeDefault = 0
         else
-            echom "set pandoc makeprg reveal"
-            set makeprg=pandoc\ -f\ markdown\ -t\ revealjs\ -s\ -V\ theme=solarized\ -o\ %.html\ %
-            set makeprg=pandoc\ -f\ markdown\ -t\ revealjs\ -s\ -V\ theme=solarized\ -o\ %.html\ %
+            let reveal_theme=get(a:, 1, "solarized")
+            echom "set pandoc makeprg reveal theme: " . reveal_theme
+            let &makeprg = "pandoc -f markdown -t revealjs -s -V theme=" . reveal_theme . " -o %.html %"
             let s:pandocMakeDefault = 1
         endif
     endfunction
