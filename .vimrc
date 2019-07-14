@@ -423,6 +423,10 @@ nnoremap <leader>s :SyntasticCheck<CR>
 " jump to tag by pressing 't'
 nnoremap t <C-]>
 
+" custom vimgrep command
+nnoremap <leader>g :set operatorfunc=VimGrepFiles<cr>g@
+vnoremap <leader>g :<c-u>call VimGrepFiles(visualmode())<cr>
+
 " ******************************************************************************
 " CUSTOM VIM FUNCTIONS
 " ******************************************************************************
@@ -444,3 +448,17 @@ if s:mysettings.hasPandoc
         endif
     endfunction
 endif
+
+" vimgrep movement in files with same filetype
+function! VimGrepFiles(type)
+    if a:type ==# 'v'
+        normal! `<v`>y
+    elseif a:type ==# 'char'
+        normal! `[v`]y
+    else
+        return
+    endif
+
+    execute "vimgrep " . shellescape(@@) . " **/*." . &filetype
+    copen
+endfunction
