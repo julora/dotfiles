@@ -459,6 +459,6 @@ function! VimGrepFiles(type)
         return
     endif
 
-    execute "vimgrep " . shellescape(@@) . " **/*." . &filetype
+    execute "vimgrep " . shellescape(@@) . " **/*." . expand('%:e')
     copen
 endfunction
