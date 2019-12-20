@@ -160,10 +160,20 @@ filetype plugin indent on
 set linespace=3
 " smart autoindenting when starting a new line
 set smartindent
+
+" default indentation
 " number of spaces to use for each step of (auto)indent
 set shiftwidth=4
 " number of spaces that a <Tab> in the file counts for
+set softtabstop=4
 set tabstop=4
+
+" filetype specific indentation
+autocmd FileType robot setlocal shiftwidth=4 softtabstop=4 tabstop=4
+autocmd FileType python setlocal shiftwidth=4 softtabstop=4 tabstop=4
+autocmd FileType javascript setlocal shiftwidth=2 softtabstop=2 tabstop=2
+autocmd FileType yaml setlocal shiftwidth=2 softtabstop=2 tabstop=2
+
 " use the appropriate number of spaces to insert <Tab>
 set expandtab
 " When on, a <Tab> in front of a line inserts blanks according to
@@ -333,6 +343,10 @@ let NERDRemoveExtraSpaces=0
 
 " enable extensions
 let g:ctrlp_extensions = ['tag', 'quickfix', 'dir']
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/]\.(git|hg|svn|DS_Store)|venv|node_modules$',
+  \ 'file': '\v\.(exe|so|dll)$',
+  \ }
 
 " EASYTAGS PLUGIN
 " ---------------
