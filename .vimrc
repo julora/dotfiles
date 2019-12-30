@@ -27,6 +27,10 @@ let s:mysettings.hasPandoc = 0
 let s:mysettings.hasTmux = 0
 let s:mysettings.hasDevelopment = 0
 
+if s:isWin
+    let  s:mysettings.hasDevelopment = 1
+endif
+
 if s:isOSX
     let s:mysettings.hasCtags = 1
     let s:mysettings.hasPandoc= 1
@@ -56,99 +60,95 @@ endif
 " ******************************************************************************
 " (2) PLUGINS (Plugin Manager Vundle)
 " ******************************************************************************
+
 if s:isWin
-    set rtp+=~/vimfiles/bundle/Vundle.vim/
-    " path in which vundle should install plugins
-    let path='~/vimfiles/bundle'
+    let path='~/vimfiles/plugged'
 endif
 if s:isUnix || s:isOSX
-    set rtp+=~/.vim/bundle/Vundle.vim/
-    let path='~/.vim/bundle'
+    let path='~/.vim/plugged'
 endif
-call vundle#begin(path)
-" let Vundle manage Vundle, required
-" docs: http://github.com/VundleVim/Vundle.Vim
-Plugin 'gmarik/Vundle.vim'
+
+call plug#begin(path)
 " plugin better default settings for vim
 " docs: https://github.com/tpope/vim-sensible
-Plugin 'tpope/vim-sensible'
+Plug 'tpope/vim-sensible'
 " plugin using git in vim
 " docs: https://github.com/tpope/vim-fugitive
-Plugin 'tpope/vim-fugitive'
-" plugin exec, make build in background
-" docs: https://github.com/tpope/vim-dispatch 
-Plugin 'tpope/vim-dispatch'
+Plug 'tpope/vim-fugitive'
 " plugin easy comment and uncomment
 " docs: https://github.com/scrooloose/nerdcommenter
-Plugin 'scrooloose/nerdcommenter'
+Plug 'scrooloose/nerdcommenter'
 " plugin file systen tree view and buffer management
 " docs: https://github.com/scrooloose/nerdtree
-Plugin 'scrooloose/nerdtree'
+Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 " plugin surround text with brackets () {} [], quotes '', etc
 " repeat will also repeat (.) surround commands
 " docs: https://github.com/tpope/vim-surround
-Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-repeat'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-repeat'
 " plugin vim colorsheme solarized
 " docs: https://github.com/altercation/vim-colors-solarized
-Plugin 'altercation/vim-colors-solarized'
+Plug 'altercation/vim-colors-solarized'
 " plugin nice looking statusline
 " docs: https://github.com/vim-airline/vim-airline
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 "plugin easy tab-completion
 "docs: https://github.com/ervandew/supertab
-Plugin 'ervandew/supertab'
+Plug 'ervandew/supertab'
 "plugin code highlighting robot framework
 " docs: https://github.com/mfukar/robotframework-vim
-Plugin 'mfukar/robotframework-vim'
+Plug 'mfukar/robotframework-vim', { 'for': 'robot' }
 " plugin snippet management and vim-snippets for predefined snippets
 " docs: https://github.com/SirVer/ultisnips
 if s:mysettings.hasPython
-    Plugin 'SirVer/ultisnips'
-    Plugin 'honza/vim-snippets'
+    Plug 'SirVer/ultisnips'
+    Plug 'honza/vim-snippets'
 endif
 " plugin more text regions brackets () {} [], quotes ''
 " docs: https://github.com/wellle/targets.vim
-Plugin 'wellle/targets.vim'
+Plug 'wellle/targets.vim'
 " plugin fuzzy finder
 " docs: https://github.com/ctrlpvim/ctrlp.vim
-Plugin 'ctrlpvim/ctrlp.vim'
+Plug 'ctrlpvim/ctrlp.vim'
 " plugin for easy tag management
 " docs: https://github.com/xolox/vim-easytags
 if s:mysettings.hasCtags
-    Plugin 'xolox/vim-misc'
-    Plugin 'xolox/vim-easytags'
+    Plug 'xolox/vim-misc'
+    Plug 'xolox/vim-easytags'
 endif
 " plugin visually show indent and indent text object
 " docs: https://github.com/nathanaelkane/vim-indent-guides
 " docs: https://github.com/michaeljsmith/vim-indent-object
-Plugin 'nathanaelkane/vim-indent-guides'
-Plugin 'michaeljsmith/vim-indent-object'
+Plug 'nathanaelkane/vim-indent-guides'
+Plug 'michaeljsmith/vim-indent-object'
 " plugin new startscreen show last used files, etc.
 " docs https://github.com/mhinz/vim-startify
-Plugin 'mhinz/vim-startify'
+Plug 'mhinz/vim-startify'
 " plugin run shell command in tmux pane
 " docs https://github.com/benmills/vimux
 if s:mysettings.hasTmux
     " plugin switching between tmux and vim splits
     " docs: https://github.com/christoomey/vim-tmux-navigator
-    Plugin 'christoomey/vim-tmux-navigator'
+    Plug 'christoomey/vim-tmux-navigator'
 endif
 if s:isOSX
 "plugin nice looking icons
 " docs: https://github.com/ryanoasis/vim-devicons
-Plugin 'ryanoasis/vim-devicons'
+Plug 'ryanoasis/vim-devicons'
 endif
+" plugin for typescript highlighting
+" docs: https://github.com/leafgarland/typescript-vim
+Plug 'leafgarland/typescript-vim', { 'for': 'ts' }
+" plugin for vue js highlighting (mixed content js, html, css)
+" docs: https://github.com/posva/vim-vue
+Plug 'posva/vim-vue', { 'for': 'vue' }
 if s:mysettings.hasDevelopment
-    " plugin linter for python or other languages
-    " docs: https://github.com/vim-syntastic/syntastic
-    Plugin 'vim-syntastic/syntastic'
-    " plugin typescript highlighting
-    " docs: https://github.com/leafgarland/typescript-vim
-    Plugin 'leafgarland/typescript-vim'
+    " plugin for formatter, linter, etc.
+    " docs: https://github.com/dense-analysis/ale
+    Plug 'dense-analysis/ale'
 endif
-call vundle#end()
+call plug#end()
 " use filetype plugins
 filetype plugin indent on
 
@@ -362,15 +362,25 @@ if s:isOSX
     let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['robot'] = 'ﮧ'
 endif
 
+" ALE Asynchronous Lint Engine PLUGIN
+" -----------------------------------
+
 if s:mysettings.hasDevelopment
-    " SYNTASTIC PLUGIN
-    " ----------------
-    let g:syntastic_always_populate_loc_list = 1
-    let g:syntastic_auto_loc_list = 0
-    let g:syntastic_check_on_open = 0
-    let g:syntastic_check_on_wq = 0
-    " passive mode by default
-    let g:syntastic_mode_map = { 'mode': 'passive' }
+    let g:ale_completion_enabled = 1
+    let g:ale_fix_on_save = 1
+    set omnifunc=ale#completion#OmniFunc
+    let g:ale_linters = {
+        \ 'python': ['pyls', 'flake8'],
+        \ 'typescript': ['tsserver'],
+        \ 'javascript': ['tsserver'],
+        \ 'vue': ['vls']
+        \ }
+    let b:ale_fixers = {
+        \ 'python': ['black','pyls'],
+        \ 'typescript': ['eslint','prettier'],
+        \ 'javascript': ['eslint','prettier']
+        \ }
+    let g:ale_completion_tsserver_autoimport = 1
 endif
 
 " ******************************************************************************
@@ -422,7 +432,12 @@ nnoremap <Leader>o :CtrlPBuffer<CR>
 " show ctrlp-tag mode
 nnoremap <Leader>t :CtrlPTag<CR>
 " reload .vimrc
-nnoremap <Leader>r :source ~/.vimrc<CR>
+if s:isOSX
+    nnoremap <Leader>r :source ~/.vimrc<CR>
+endif
+if s:isWin
+    nnoremap <Leader>r :source ~/_vimrc<CR>
+endif
 " insert filename
 nnoremap <Leader>fn "=expand("%:t")<CR>p
 " Toggle NerdTree in Current Folder
@@ -431,8 +446,6 @@ nnoremap <Leader>n :NERDTreeToggle %<CR>
 nnoremap <Leader>cd :cd %:p:h<CR>
 " yank current filename and line
 nnoremap <leader>y :let @+=expand("%") . ':' . line(".")<CR>
-" run SyntasticCheck
-nnoremap <leader>s :SyntasticCheck<CR>
 
 " jump to tag by pressing 't'
 nnoremap t <C-]>
@@ -476,3 +489,12 @@ function! VimGrepFiles(type)
     execute "vimgrep " . shellescape(@@) . " **/*." . expand('%:e')
     copen
 endfunction
+
+" ******************************************************************************
+" GENERATE HELP TAGS FOR ALL PLUGINS
+" ******************************************************************************
+" Put these lines at the very end of your vimrc file.
+
+" Load all of the helptags now, after plugins have been loaded.
+" All messages and errors will be ignored.
+silent! helptags ALL
