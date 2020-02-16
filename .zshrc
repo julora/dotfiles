@@ -104,6 +104,8 @@ export EDITOR=vim
 alias ctags="`brew --prefix`/bin/ctags"
 
 # fzf Configuration
+# Use fzf-Keybindings
+# $(brew --prefix)/opt/fzf/install
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 # Tabcompletion with .. instead of **
 export FZF_COMPLETION_TRIGGER='..'
@@ -147,3 +149,11 @@ tm() {
   fi
   session=$(tmux list-sessions -F "#{session_name}" 2>/dev/null | fzf --exit-0) &&  tmux $change -t "$session" || echo "No sessions found."
 }
+
+# pyenv config
+# change global python version
+# brew install pyenv
+# pyenv install 3.8.1 (current python version)
+if command -v pyenv 1>/dev/null 2>&1; then
+  eval "$(pyenv init -)"
+fi
