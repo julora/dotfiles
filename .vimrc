@@ -52,9 +52,9 @@ if s:isWin
     set directory=~/vimfiles/swp//
 endif
 if s:isUnix || s:isOSX
-    set undodir=~/.vim/.undo//
-    set backupdir=~/.vim/.backup//
-    set directory=~/.vim/.swp//
+    set undodir=~/.vim/undo//
+    set backupdir=~/.vim/backup//
+    set directory=~/.vim/swp//
 endif
 
 " ******************************************************************************
