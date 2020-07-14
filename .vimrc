@@ -392,7 +392,7 @@ if s:isWin
     let g:jqplay_jq_exe_path = 'C:\Users\Julian\jq\jq-win64.exe'
 endif
 if s:isUnix || s:isOSX
-    let g:jqplay_jq_exe_path = '~/jq/jq.exe'
+    let g:jqplay_jq_exe_path = '/usr/local/bin/jq'
 endif
 
 let g:jqplay = {
