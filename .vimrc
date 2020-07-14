@@ -148,6 +148,9 @@ if s:mysettings.hasDevelopment
     " docs: https://github.com/dense-analysis/ale
     Plug 'dense-analysis/ale'
 endif
+" plugin for interactively use jq on json buffer
+" https://github.com/bfrg/vim-jqplay
+Plug 'bfrg/vim-jqplay', { 'for': 'json' } 
 call plug#end()
 " use filetype plugins
 filetype plugin indent on
@@ -382,6 +385,21 @@ if s:mysettings.hasDevelopment
         \ }
     let g:ale_completion_tsserver_autoimport = 1
 endif
+
+" qplay - plugin
+" --------------
+if s:isWin
+    let g:jqplay_jq_exe_path = 'C:\Users\Julian\jq\jq-win64.exe'
+endif
+if s:isUnix || s:isOSX
+    let g:jqplay_jq_exe_path = '~/jq/jq.exe'
+endif
+
+let g:jqplay = {
+    \ 'exe': g:jqplay_jq_exe_path,
+    \ 'opts': '--tab',
+    \ 'autocmds': ['TextChanged', 'CursorHoldI', 'InsertLeave']
+    \ }
 
 " ******************************************************************************
 " (6) FILETYPE SPECIFIC CONFIGURATIONS
