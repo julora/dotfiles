@@ -101,10 +101,10 @@ Plug 'ervandew/supertab'
 Plug 'mfukar/robotframework-vim', { 'for': 'robot' }
 " plugin snippet management and vim-snippets for predefined snippets
 " docs: https://github.com/SirVer/ultisnips
-if s:mysettings.hasPython
-    Plug 'SirVer/ultisnips'
-    Plug 'honza/vim-snippets'
-endif
+"if s:mysettings.hasPython
+"    Plug 'SirVer/ultisnips'
+"    Plug 'honza/vim-snippets'
+"endif
 " plugin more text regions brackets () {} [], quotes ''
 " docs: https://github.com/wellle/targets.vim
 Plug 'wellle/targets.vim'
