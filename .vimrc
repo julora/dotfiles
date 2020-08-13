@@ -209,6 +209,11 @@ set ignorecase
 " first match highlighted (overwriting the status line, if there is
 "one).
 set wildmenu
+" Don't pass messages to |ins-completion-menu|.
+set shortmess+=c
+" Give more space for displaying messages.
+set cmdheight=2
+
 " If in Insert, Replace or Visual mode put a message on the last line.
 set showmode
 
@@ -470,6 +475,12 @@ nnoremap <leader>y :let @+=expand("%") . ':' . line(".")<CR>
 
 " jump to tag by pressing 't'
 nnoremap t <C-]>
+
+" coc completion relevant mappings
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
 
 " custom vimgrep command
 nnoremap <leader>g :set operatorfunc=VimGrepFiles<cr>g@
