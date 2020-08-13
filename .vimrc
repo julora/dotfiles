@@ -147,6 +147,11 @@ if s:mysettings.hasDevelopment
     " plugin for formatter, linter, etc.
     " docs: https://github.com/dense-analysis/ale
     Plug 'dense-analysis/ale'
+    " plugin for code completion
+    " docs: https://github.com/neoclide/coc.nvim
+    " language plugins have to be installed separately
+    " :CocInstall coc-tsserver coc-json coc-html coc-css
+    Plug 'neoclide/coc.nvim', {'branch': 'release'}
 endif
 " plugin for interactively use jq on json buffer
 " https://github.com/bfrg/vim-jqplay
@@ -369,9 +374,7 @@ endif
 " -----------------------------------
 
 if s:mysettings.hasDevelopment
-    let g:ale_completion_enabled = 1
     let g:ale_fix_on_save = 1
-    set omnifunc=ale#completion#OmniFunc
     let g:ale_linters = {
         \ 'python': ['pyls', 'flake8'],
         \ 'typescript': ['tsserver'],
