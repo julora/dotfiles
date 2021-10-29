@@ -2,7 +2,7 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/Users/loschelders/.oh-my-zsh"
+export ZSH="/Users/Julian.Loschelders/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -155,7 +155,7 @@ tm() {
 # brew install pyenv
 # pyenv install 3.8.1 (current python version)
 if command -v pyenv 1>/dev/null 2>&1; then
-  eval "$(pyenv init -)"
+  eval "$(pyenv init --path)"
 fi
 
 #tmuxp config
